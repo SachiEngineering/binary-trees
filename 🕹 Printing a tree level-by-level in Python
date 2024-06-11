@@ -1,0 +1,58 @@
+'''
+Press the run button to execute the following code.
+Changes in this editor will not be saved!
+
+BFS is the most straightforward way
+to print a tree level-by-level.
+
+In this example,
+the queue treats the left side as the "back of the line"
+and the right side as the "front of the line".
+
+Inspired by 
+https://leetcode.com/problems/binary-tree-level-order-traversal/
+'''
+
+from collections import deque
+
+def printLevelOrder(root):
+  if not root:
+    return []
+
+  queue = deque([root])
+  
+  while queue:
+    # take a snapshot of the queue size because it changes
+    size = len(queue)
+    
+    for i in range(size):
+      node = queue.pop() # remove from the right
+      
+      if node.left:
+        queue.appendleft(node.left) # add to the left
+      if node.right:
+        queue.appendleft(node.right) # add to the left
+      
+      print(node.val, end=" ")
+      
+    print() # it's a new level
+
+
+class Node:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+#       10
+#   5       15
+# 2   7  12    17
+leftLeft, leftRight = Node(2), Node(7)
+rightLeft, rightRight = Node(12), Node(17)
+left = Node(5, leftLeft, leftRight)
+right = Node(15, rightLeft, rightRight)
+root = Node(10, left, right)
+
+
+printLevelOrder(root)
+
