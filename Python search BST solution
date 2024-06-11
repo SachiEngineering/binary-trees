@@ -1,0 +1,73 @@
+class Node:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+
+# Creating the following tree and searching through it
+#
+#             21
+#      14             28
+#  11     18      25      32
+# 5 12   15 19   23 27   30 37
+a,b,c,d = Node(5), Node(12), Node(15), Node(19)
+e,f,g,h = Node(23), Node(27), Node(30), Node(37)
+leftLeft, leftRight = Node(11, a, b), Node(18, c, d)
+rightLeft, rightRight = Node(25, e, f), Node(32, g, h)
+left = Node(14, leftLeft, leftRight)
+right = Node(28, rightLeft, rightRight)
+root = Node(21, left, right)
+
+
+def iterativeSearchInBST(root, target):
+  cur = root
+  
+  while cur:
+    if target == cur.val:
+      return cur
+
+    # less than root so go left
+    elif target < cur.val:
+      cur = cur.left
+
+    # greater than root so go right
+    else: # target > cur.val
+      cur = cur.right
+
+  return None
+
+
+def recursiveSearchInBST(root, target):
+  if not root:
+    return None
+  
+  if target == root.val:
+    return root
+
+  # less than root so go left
+  elif target < root.val:
+    return recursiveSearchInBST(root.left, target)
+
+  # greater than root so go right
+  return recursiveSearchInBST(root.right, target)
+
+
+target1 = 27 # present
+target2 = 29 # not present
+
+#             21
+#      14             28
+#  11     18      25      32
+# 5 12   15 19   23 27   30 37
+
+
+if iterativeSearchInBST(root, target1):
+  print("1. Iterative: The value " + str(target1) + " exists in the tree")
+if not iterativeSearchInBST(root, target2):
+  print("2. Iterative: The value " + str(target2) + " doesn't exist in the tree")
+if recursiveSearchInBST(root, target1): 
+  print("3. Recursive: The value " + str(target1) + " exist in the tree")
+if not recursiveSearchInBST(root, target2): 
+  print("4. Recursive: The value " + str(target2) + " doesn't exist in the tree")
+
