@@ -1,0 +1,54 @@
+# Univalued Binary Tree
+
+# A binary tree is uni-valued if every node in the tree has the same value.
+
+# Given the root of a binary tree, return true if the given tree is uni-valued, or false otherwise.
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution(object):
+    def isUnivalIterative(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return False
+
+        stack = [root] #nodes to check
+        value = root.val
+        while stack:
+            node = stack.pop()
+
+            if node.val == value:
+                if node.right:
+                    stack.append(node.right)
+                if node.left:
+                    stack.append(node.left)
+            else:
+                return False
+    
+        return True
+
+    def isUnivalRecur(self, tree):
+        if not tree:
+            return True
+        
+        if tree.right:
+            if tree.val != tree.right.val:
+                return False
+            
+        if tree.left:
+            if tree.val != tree.left.val:
+                return False
+        
+        return self.isUnivalRecur(tree.right) and self.isUnivalRecur(tree.left)
+
+
+
+                
