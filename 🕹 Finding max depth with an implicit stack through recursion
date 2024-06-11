@@ -1,0 +1,42 @@
+def getMaxDepth(root):
+  if not root:
+    return 0
+
+  leftDepth = getMaxDepth(root.left)
+  rightDepth = getMaxDepth(root.right)
+  
+  return max(leftDepth, rightDepth) + 1
+  
+
+class Node:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+
+#       10
+#   5       15
+# 2   7  12    17
+leftLeft, leftRight = Node(2), Node(7)
+rightLeft, rightRight = Node(12), Node(17)
+left = Node(5, leftLeft, leftRight)
+right = Node(15, rightLeft, rightRight)
+root = Node(10, left, right)
+
+
+theDepth = getMaxDepth(root)
+print("The maximum depth of this tree is: " + str(theDepth))
+
+
+rightLeft.right = Node(13)
+# now the tree looks like
+#
+#       10
+#   5       15
+# 2   7  12    17
+#          13
+theNewDepth = getMaxDepth(root)
+print("\nAfter adding another node to one of the leaves,\n\
+the maximum depth of this tree is: " + str(theNewDepth))
+
