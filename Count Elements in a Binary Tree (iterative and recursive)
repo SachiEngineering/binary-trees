@@ -1,0 +1,64 @@
+'''
+✏️ Description
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+Q. Given a binary tree, count the number of elements in the tree.
+
+Example:
+• Given a binary tree:
+                 1
+                / \
+               7   3
+              / \
+             4   5
+// returns 5
+
+▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+🟦 Python
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+'''
+class TreeNode:
+    def __init__(self, value = 0, left = None, right = None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+#iterative       
+def count_nodes_iterative(root: TreeNode) -> int:
+    if root is None:
+        return 0
+    
+    count = 0
+    stack = [root]
+    
+    while stack:
+        node = stack.pop()
+        count += 1
+        
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+    
+    return count
+
+#recursive
+def count_nodes_recursive(root: TreeNode) -> int:
+    if root is None:
+        return 0
+    
+    left_count = count_nodes_recursive(root.left)
+    right_count = count_nodes_recursive(root.right)
+    
+    return 1 + left_count + right_count
+    
+
+# Verify 
+print(count_nodes_iterative(None), 0)
+print(count_nodes_iterative(TreeNode(1, TreeNode(2), TreeNode(3))), 3)
+print(count_nodes_iterative(TreeNode(2, TreeNode(29, TreeNode(26)), TreeNode(4, None, TreeNode(2, TreeNode(9))))), 6)
+print(count_nodes_iterative(TreeNode()), 1)
+
+print(count_nodes_recursive(None), 0)
+print(count_nodes_recursive(TreeNode(1, TreeNode(2), TreeNode(3))), 3)
+print(count_nodes_recursive(TreeNode(2, TreeNode(29, TreeNode(26)), TreeNode(4, None, TreeNode(2, TreeNode(9))))), 6)
+print(count_nodes_recursive(TreeNode()), 1)
