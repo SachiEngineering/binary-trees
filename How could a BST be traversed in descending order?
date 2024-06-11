@@ -1,0 +1,37 @@
+# Implement me
+def reverseInOrderTraversal(node):
+  if node:
+    reverseInOrderTraversal(node.right)
+    print(node.val),
+    reverseInOrderTraversal(node.left)
+
+
+def inOrderTraversal(node):
+  if node:
+    inOrderTraversal(node.left)
+    print(node.val),
+    inOrderTraversal(node.right)
+
+
+class Node:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+#       10
+#   5       15
+# 2   7  12    17
+leftLeft, leftRight = Node(2), Node(7)
+rightLeft, rightRight = Node(12), Node(17)
+left = Node(5, leftLeft, leftRight)
+right = Node(15, rightLeft, rightRight)
+root = Node(10, left, right)
+
+
+print("This will print: 2 5 7 10 12 15 17")
+inOrderTraversal(root)
+
+print("\n\nThis should print: 17 15 12 10 7 5 2")
+reverseInOrderTraversal(root)
+
