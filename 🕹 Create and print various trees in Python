@@ -1,0 +1,76 @@
+class BinaryTreeNode:
+  def __init__(self, val, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+
+class TernaryTreeNode:
+  def __init__(self, val, left=None, middle=None, right=None):
+    self.val = val
+    self.left = left
+    self.middle = middle
+    self.right = right
+
+
+class QuadTreeNode:
+  def __init__(self, val, topLeft=None, topRight=None, 
+                          botLeft=None, botRight=None):
+    self.val = val
+    self.topLeft = topLeft
+    self.topRight = topRight
+    self.botLeft = botLeft
+    self.botRight = botRight
+
+
+#   10
+# 5    15
+binaryRoot = BinaryTreeNode(10, 
+BinaryTreeNode(5), BinaryTreeNode(15))
+
+
+#   10
+# 5 11  15
+ternaryRoot = TernaryTreeNode(10, 
+TernaryTreeNode(5), TernaryTreeNode(11), TernaryTreeNode(15))
+
+
+#   10
+#
+#  5  11
+# 15  20
+quadRoot = QuadTreeNode(10,
+QuadTreeNode(5), QuadTreeNode(11), QuadTreeNode(15), QuadTreeNode(20))
+
+
+def printBinaryTree(root):
+  if root:
+    print(root.val)
+    printBinaryTree(root.left)
+    printBinaryTree(root.right)
+    
+    
+def printTernaryTree(root):
+  if root:
+    print(root.val)
+    printTernaryTree(root.left)
+    printTernaryTree(root.middle)
+    printTernaryTree(root.right)
+    
+    
+def printQuadTree(root):
+  if root:
+    print(root.val)
+    printQuadTree(root.topLeft)
+    printQuadTree(root.topRight)
+    printQuadTree(root.botLeft)
+    printQuadTree(root.botRight)
+
+
+print("Printing the binary tree:")
+printBinaryTree(binaryRoot)
+print("\n\nPrinting the ternary tree:")
+printTernaryTree(ternaryRoot)
+print("\n\nPrinting the quad tree:")
+printQuadTree(quadRoot)
+
