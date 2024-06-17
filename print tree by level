@@ -1,0 +1,61 @@
+
+'''
+Print Tree by Level
+
+Given a binary tree, return a list of lists of the nodes' values organized as a level-by-level view from left to right.
+ 
+
+EXAMPLE(S)
+Input:
+   3
+ 2  4
+1    5
+
+Output:
+[[3], [2, 4], [1, 5]]
+ 
+
+FUNCTION SIGNATURE
+function levelOrder(root) {
+def levelOrder(node: Node) -> list[list[int]]:
+'''
+
+class Node:
+    def __init__(self, value, left=None, right=None):
+        # Initialize a tree node with a value and optional left and right children
+        self.value = value
+        self.left = left
+        self.right = right
+
+def levelOrder(node):
+    if not node:
+        # If the tree is empty, return an empty list
+        return []
+
+    result = []  # List to store the final level order traversal
+    queue = [node]  # Initialize the queue with the root node
+
+    while queue:
+        level_size = len(queue)  # Number of nodes at the current level
+        current_level = []  # List to store nodes' values at the current level
+
+        for i in range(level_size):
+            current_node = queue.pop(0)  # Dequeue the first node in the queue
+            current_level.append(current_node.value)  # Add its value to the current level list
+
+            # Enqueue the left child if it exists
+            if current_node.left:
+                queue.append(current_node.left)
+            # Enqueue the right child if it exists
+            if current_node.right:
+                queue.append(current_node.right)
+
+        # Add the current level's values to the result list
+        result.append(current_level)
+
+    return result
+
+root = Node(3,Node(2,Node(1)),Node(4,None,Node(5)))
+
+# Call the function
+print(levelOrder(root))  # Output: [[3], [2, 4], [1, 5]]
