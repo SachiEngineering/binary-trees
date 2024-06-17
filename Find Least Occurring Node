@@ -1,0 +1,94 @@
+
+'''
+Find Least Occurring Node
+
+Given a binary tree with node values represented as integers, find and return the least occurring tree node value (eg: 3).
+
+You can assume there will always be a valid answer (no duplicate frequencies or invalid arrangements).
+ 
+
+EXAMPLE(S)
+      1
+  2       _
+2   _   _   _
+should return Node(1)
+
+      1
+  1       1
+1   1   1   1
+should return Node(1)
+
+  9
+_   _
+should return Node(9)
+ 
+
+FUNCTION SIGNATURE
+function findLeastOccurringNode(root) {
+'''
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+def findLeastOccurringNode(root):
+    if not root:
+        return None
+
+    # Dictionary to count the frequency of each node value
+    frequency = {}
+
+    # Helper function to perform DFS and count frequencies
+    def dfs(node):
+        if not node:
+            return
+        if node.val in frequency:
+            frequency[node.val] += 1
+        else:
+            frequency[node.val] = 1
+        dfs(node.left)
+        dfs(node.right)
+
+    # Perform DFS starting from the root
+    dfs(root)
+
+    # Find the node value with the least frequency. use key= to get values instead of key
+    least_occurring_value = min(frequency, key=frequency.get)
+    
+    # Return a new TreeNode with the least occurring value
+    return TreeNode(least_occurring_value)
+
+
+
+# Example usage:
+# Creating a binary tree:
+#       1
+#   2       _
+# 2   _   _   _
+root1 = TreeNode(1)
+root1.left = TreeNode(2)
+root1.left.left = TreeNode(2)
+
+print(findLeastOccurringNode(root1).val)  # Output should be 1
+
+# Creating another binary tree:
+#       1
+#   1       1
+# 1   1   1   1
+root2 = TreeNode(1)
+root2.left = TreeNode(1)
+root2.right = TreeNode(1)
+root2.left.left = TreeNode(1)
+root2.left.right = TreeNode(1)
+root2.right.left = TreeNode(1)
+root2.right.right = TreeNode(1)
+
+print(findLeastOccurringNode(root2).val)  # Output should be 1
+
+# Creating another binary tree:
+#   9
+# _   _
+root3 = TreeNode(9)
+
+print(findLeastOccurringNode(root3).val)  # Output should be 9
