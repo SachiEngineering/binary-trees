@@ -1,0 +1,133 @@
+class TreeNode:
+    def __init__(self, value=0, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+#1###############################
+def count_target_value(root, target):
+    if root is None:
+        return 0
+    
+    count = 1 if root.value == target else 0
+    count += count_target_value(root.left, target)
+    count += count_target_value(root.right, target)
+    
+    return count
+
+#2###############################
+def count_nodes_satisfying_predicate(root, predicate):
+    if root is None:
+        return 0
+    
+    count = 1 if predicate(root.value) else 0
+    count += count_nodes_satisfying_predicate(root.left, predicate)
+    count += count_nodes_satisfying_predicate(root.right, predicate)
+    
+    return count
+
+#3###############################
+
+def find_most_frequent_value(root):
+    if root is None:
+        return None
+
+    # Dictionary to store frequency of each value
+    frequency = {}
+
+    # Helper function to traverse the tree and update the frequency dictionary
+    def traverse(node):
+        if node is None:
+            return
+        if node.value in frequency:
+            frequency[node.value] += 1
+        else:
+            frequency[node.value] = 1
+        traverse(node.left)
+        traverse(node.right)
+    
+    # Traverse the tree
+    traverse(root)
+
+    # Find the value with the highest frequency
+    most_frequent_value = max(frequency, key=frequency.get)
+    return most_frequent_value, frequency[most_frequent_value]
+
+#4###############################
+
+def findMostFrequent(root, predicate):
+    if root is None:
+        return None
+
+    # Dictionary to store frequency of matching values
+    frequency = {}
+
+    # Helper function to traverse the tree and update the frequency dictionary
+    def traverse(node):
+        if node is None:
+            return
+        if predicate(node.value):
+            if node.value in frequency:
+                frequency[node.value] += 1
+            else:
+                frequency[node.value] = 1
+        traverse(node.left)
+        traverse(node.right)
+    
+    # Traverse the tree
+    traverse(root)
+
+    # Find the value with the highest frequency
+    if not frequency:
+        return None  # No matching values found
+    most_frequent_value = max(frequency, key=frequency.get)
+    return most_frequent_value, frequency[most_frequent_value]
+
+#5###############################
+
+def findSmallestPositiveValue(root):
+    if root is None:
+        return None
+
+    queue = [root]
+    smallest_positive = float('inf')
+
+    while queue:
+        node = queue.pop(0)
+        
+        if node.value > 0 and node.value < smallest_positive:
+            smallest_positive = node.value
+        
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+
+    return smallest_positive if smallest_positive != float('inf') else None
+
+#6###############################
+
+def isValueBetter(previousBest, value):
+    # Return True if value is positive and either previousBest is None or value is smaller than previousBest
+    return value > 0 and (previousBest is None or value < previousBest)
+
+def findBest(root, predicate):
+    if root is None:
+        return None
+
+    queue = [root]
+    best_value = None
+
+    while queue:
+        node = queue.pop(0)
+        
+        if predicate(best_value, node.value):
+            best_value = node.value
+        
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+
+    return best_value
+
