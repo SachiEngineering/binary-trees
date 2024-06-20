@@ -1,0 +1,61 @@
+# Q. Given a binary search tree and a target element's value, insert the target in the appropriate position.
+
+# Examples:
+# • Given a binary search tree:
+#               6
+#             /   \
+#            3     8
+#           / \ 
+#          2   4
+
+# • For target: 7 // returns:
+#               6
+#             /   \
+#            3     8
+#           / \    /
+#          2   4  7
+#         /     \
+#        1       5
+
+class TreeNode:
+    def __init__(self, val = 0, left = None, right = None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def arrayify_tree(root: TreeNode):
+    if root is None:
+        return []
+    queue = []
+    array = []
+    queue.append(root)
+    while (len(queue) != 0):
+        node = queue.pop(0)
+        array.append(node.val)
+        if (node.left):
+            queue.append(node.left)
+        if (node.right):
+            queue.append(node.right)
+    return array
+
+def insert_bst(root: TreeNode, target: int) -> TreeNode:
+    if not root:
+        return TreeNode(target)
+    
+    if target < root.val:
+        if root.left:
+            insert_bst(root.left,target)
+        else:
+            root.left = TreeNode(target)
+    else:
+        if root.right:
+            insert_bst(root.right,target)
+        else:
+            root.right = TreeNode(target)
+
+    return root
+
+# Example usage and test cases
+tree = TreeNode(6, TreeNode(3, TreeNode(2), TreeNode(4)), TreeNode(8))
+tree = insert_bst(tree, 7)
+print(arrayify_tree(tree))  # Expected output: [6, 3, 8, 2, 4, 7]
