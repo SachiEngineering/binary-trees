@@ -1,0 +1,36 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def rightSideView(root):
+    # If the root is None, return an empty list as there is no tree
+    if not root:
+        return []
+
+    # List to store the right side view
+    right_view = []
+    # Queue for BFS, initialized with the root node
+    queue = [root]
+    
+    # Perform BFS
+    while queue:
+        # Get the number of nodes at the current level
+        level_length = len(queue)
+        # Iterate through all nodes at the current level
+        for i in range(level_length):
+            # Pop the first node
+            node = queue.pop(0)
+            # If this is the last node of the current level, add it to the right view
+            if i == level_length - 1:
+                right_view.append(node.val)
+            # Add the left child to the queue if it exists
+            if node.left:
+                queue.append(node.left)
+            # Add the right child to the queue if it exists
+            if node.right:
+                queue.append(node.right)
+
+    # Return the list of rightmost nodes at each level
+    return right_view
